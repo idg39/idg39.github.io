@@ -16,6 +16,7 @@ h1 {
 }
 
 #body-container {
+<<<<<<< HEAD
   background-color: #f7f7f7;
   max-width: 1000px;
   margin: auto;
@@ -39,4 +40,22 @@ h1 {
   font-size: 25px;
   position: relative;
   left: 50px;
+=======
+  background-color: #92c5de;
+  color:#0571b0;
+  text-align: center;
+  margin: 0;
+}
+#header {
+  
+}
+#profile-picture{
+
+}
+#welcome-text {
+
+}
+#research-interests{
+
+>>>>>>> d7c2e445b584b12756a612a183747cd716ce95c6
 }
