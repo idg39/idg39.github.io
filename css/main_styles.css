@@ -6,7 +6,7 @@ Colorblind safe color palette from colorbrewer2.org.
 */
 
 body {
-  background color: #3182bd;
+  background-color: #3182bd;
   color: #abd9e9;
   text-align: center;
 }
