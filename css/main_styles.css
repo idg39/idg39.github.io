@@ -1,5 +1,16 @@
+/*
+Colorblind safe color palette from colorbrewer2.org.
+#3182bd - Dark Blue
+#abd9e9 - Light Blue
+#2c7bb6 - Blue
+*/
+
 body {
   background color: #3182bd;
   color: #abd9e9;
   text-align: center;
+}
+
+h1 {
+  color: #2c7bb6;
 }
