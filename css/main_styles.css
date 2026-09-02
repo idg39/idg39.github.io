@@ -9,14 +9,16 @@ body {
   background-color: #31a354;
   color: #abd9e9;
   text-align: center;
+  margin: 0;
 }
 
 h1 {
   color: #2c7bb6;
+  padding: 5px;
+  margin: 0;
 }
 
 #body-container {
-<<<<<<< HEAD
   background-color: #f7f7f7;
   max-width: 1000px;
   margin: auto;
@@ -29,7 +31,7 @@ h1 {
   background-color: #0571b0;
 }
 #profile-picture {
-  float:left;
+  float: left;
 }
 #welcome-text {
   padding-top: 25px;
@@ -40,22 +42,4 @@ h1 {
   font-size: 25px;
   position: relative;
   left: 50px;
-=======
-  background-color: #92c5de;
-  color:#0571b0;
-  text-align: center;
-  margin: 0;
-}
-#header {
-  
-}
-#profile-picture{
-
-}
-#welcome-text {
-
-}
-#research-interests{
-
->>>>>>> d7c2e445b584b12756a612a183747cd716ce95c6
 }
