@@ -14,3 +14,22 @@ body {
 h1 {
   color: #2c7bb6;
 }
+
+#body-container {
+  background-color: #92c5de;
+  color:#0571b0;
+  text-align: center;
+  margin: 0;
+}
+#header {
+  
+}
+#profile-picture{
+
+}
+#welcome-text {
+
+}
+#research-interests{
+
+}
