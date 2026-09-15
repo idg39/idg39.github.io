@@ -1,2 +1,2 @@
 var "user_name" = window.prompt("Please enter your name", "Type your name here");
-document.write("user_name").textcontent = user_name;
+document.getElementById("user_name").textcontent = user_name;
