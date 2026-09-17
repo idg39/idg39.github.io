@@ -6,7 +6,7 @@ var webmaps =
   ["ArcGIS Online", "https://www.arcgis.com/index.html", "ArcGIS Online is an example of web mapping. It was made with the primary purpose of acting as a depository of GIS data for use by anybody. Its strengths are that the it has been that largest depository for a while now and thus serves as aa majorly large and helpful source of data."]
 ];
 
-function welcome ()
+function welcome()
 {
   let a = "Please enter your name.";
   let b = "Type your name here.";
