@@ -17,16 +17,17 @@ var webmaps =
 ];
 
 function webmap_table() {
-  document.write("<table width=100%>");
-  for (var row=0; row < webmaps.length; row++)
-  output += '<tr>';
-          output += '<td>' + webmaps[row][0] + '</td>';
-          output += '<td align="right"><a href="' + webmaps[row][1] + '">' + webmaps[row][1] + '</a></td>';
-          output += '</tr>';
-          output += '<tr>';
-          output += '<td colspan="2">' + webmaps[row][2] + '</td>';
-          output += '</tr>';
-      }
-  document.write("</table>");
-  return "";
+    var output = "<table width='100%'>";
+    for (var row = 0; row < webmaps.length; row++) {
+        output += '<tr>';
+        output += '<td>' + webmaps[row][0] + '</td>';
+        output += '<td align="right"><a href="' + webmaps[row][1] + '">' + webmaps[row][1] + '</a></td>';
+        output += '</tr>'; 
+        output += '<tr>';
+        output += '<td colspan="2">' + webmaps[row][2] + '</td>';
+        output += '</tr>';
+    }
+    output += "</table>";
+    document.write(output);
+    return "";
 }
