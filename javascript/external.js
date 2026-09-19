@@ -19,19 +19,25 @@ var webmaps =
 function webmap_table() {
     document.write('<table width="100%">');
     for (var row = 0; row < webmaps.length; row++) {
-        var bgColor;
         if (row % 2 == 0) {
-            bgColor = '#ffffff';
+            document.write('<tr>');
+            document.write('<td>' + webmaps[row] + '</td>');
+            document.write('<td align="right">' + webmaps[row] + '</td>');
+            document.write('</tr>');
+
+            document.write('<tr>');
+            document.write('<td colspan="2">' + webmaps[row] + '</td>');
+            document.write('</tr>');
         } else {
-            bgColor = '#f2f2f2';
+            document.write('<tr>');
+            document.write('<td>' + webmaps[row] + '</td>');
+            document.write('<td align="right">' + webmaps[row] + '</td>');
+            document.write('</tr>');
+
+            document.write('<tr>');
+            document.write('<td colspan="2">' + webmaps[row] + '</td>');
+            document.write('</tr>');
         }
-        document.write('<tr bgcolor="' + bgColor + '">');
-        document.write('<td>' + webmaps[row] + '</td>');
-        document.write('<td align="right">' + webmaps[row] + '</td>');
-        document.write('</tr>');
-        document.write('<tr bgcolor="' + bgColor + '">');
-        document.write('<td colspan="2">' + webmaps[row] + '</td>');
-        document.write('</tr>');
     }
     document.write('</table>');
     return;
