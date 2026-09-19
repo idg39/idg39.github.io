@@ -24,18 +24,10 @@ function webmap_table() {
             document.write('<td>' + webmaps[row] + '</td>');
             document.write('<td align="right">' + webmaps[row] + '</td>');
             document.write('</tr>');
-
-            document.write('<tr>');
-            document.write('<td colspan="2">' + webmaps[row] + '</td>');
-            document.write('</tr>');
         } else {
             document.write('<tr>');
             document.write('<td>' + webmaps[row] + '</td>');
             document.write('<td align="right">' + webmaps[row] + '</td>');
-            document.write('</tr>');
-
-            document.write('<tr>');
-            document.write('<td colspan="2">' + webmaps[row] + '</td>');
             document.write('</tr>');
         }
     }
