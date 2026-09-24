@@ -57,7 +57,8 @@
     <div id="mapid" style="width: 600px; height: 400px; margin: auto; bottom: 30px;">
       <script>
       var mymap = L.map('mapid');
-      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {maxZoom: 18, id: 'mapbox/streets-v11', accessToken: mapbox_access_token}).addTo(mymap);
+      // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {maxZoom: 18, id: 'mapbox/dark-v10', accessToken: mapbox_access_token}).addTo(mymap);
+      L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {}).addTo(mymap);
       var marker = L.marker([51.5, -0.09]).addTo(mymap);
       var circle = L.circle([51.508, -0,11], { color: 'red', fillColor: '#f03', fillOpacity: 0.5, radius: 500}).addTo(mymap);
       var polygon = L.polygon([[51.509, -0.08], [51.503, -0.06], [51.51, -0.047]]).addTo(mymap);
