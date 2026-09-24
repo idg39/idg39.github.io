@@ -62,6 +62,9 @@
       marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
       circle.bindPopup("I am a circle.");
       polygon.bindPopup("I am a polygon.");
+      marker.on('click', function (e){ mymap.setView(e.latlng, 14);})
+      circle.on('click', function(e){ mymap.setView(e.latlng, 13);})
+      polygon.on('click', fucntion(e){ mymap.setView(e.latlng, 13);})
       </script>
     </div>
   </div>
