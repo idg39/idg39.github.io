@@ -58,103 +58,104 @@
     <br>
     <div id="mapid" style="width: 600px; height: 400px; margin: auto; bottom: 30px;">
       <script>
-      var mymap = L.map('mapid');
-      // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {maxZoom: 18, id: 'mapbox/dark-v10', accessToken: mapbox_access_token}).addTo(mymap);
-      L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {}).addTo(mymap);
-      var geocoder = L.Control.geocoder({
-          defaultMarkGeocode: false,
-          geocoder: new L.Control.Geocoder.Nominatim()
-      }).on('markgeocode', function(e) {
-      var bbox = e.geocode.bbox;
-      var poly = L.polygon([
-              bbox.getSouthEast(),
-              bbox.getNorthEast(),
-              bbox.getNorthWest(),
-              bbox.getSouthWest()
-      ]);
-      mymap.fitBounds(poly.getBounds());
-      }).addTo(mymap);
-      var tajMahalIcon = L.icon({
-        iconUrl: 'https://img.icons8.com/?size=100&id=4672&format=png&color=000000',
-        iconSize:, 24
-        iconAnchor:, [0, 25]
+        var mymap = L.map('mapid');
+        // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {maxZoom: 18, id: 'mapbox/dark-v10', accessToken: mapbox_access_token}).addTo(mymap);
+        L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {}).addTo(mymap);
+        var geocoder = L.Control.geocoder({
+            defaultMarkGeocode: false,
+            geocoder: new L.Control.Geocoder.Nominatim()
+        }).on('markgeocode', function(e) {
+        var bbox = e.geocode.bbox;
+        var poly = L.polygon([
+                bbox.getSouthEast(),
+                bbox.getNorthEast(),
+                bbox.getNorthWest(),
+                bbox.getSouthWest()
+        ]);
+        mymap.fitBounds(poly.getBounds());
+        }).addTo(mymap);
+
+        var tajMahalIcon = L.icon({
+          iconUrl: 'https://img.icons8.com/?size=100&id=4672&format=png&color=000000',
+          iconSize:, [24, 24],
+          iconAnchor:, [0, 25],
+          popupAnchor: [0, -35]
+        });
+
+        var greatWallIcon = L.icon({
+          iconUrl: 'https://img.icons8.com/?size=100&id=1992&format=png&color=000000',
+        iconSize:, [24, 24],
+        iconAnchor:, [0, 25],
         popupAnchor: [0, -35]
-      });
+        });
 
-      var greatWallIcon = L.icon({
-        iconUrl: 'https://img.icons8.com/?size=100&id=1992&format=png&color=000000',
-      iconSize:, 24
-      iconAnchor:, [0, 25]
-      popupAnchor: [0, -35]
-      });
+        var petraIcon = L.icon({
+          iconUrl: 'https://img.icons8.com/?size=100&id=1992&format=png&color=000000',
+          iconSize:, [24, 24],
+          iconAnchor:, [0, 25],
+          popupAnchor: [0, -35]
+        });
 
-      var petraIcon = L.icon({
-        iconUrl: 'https://img.icons8.com/?size=100&id=1992&format=png&color=000000',
-        iconSize:, 24
-        iconAnchor:, [0, 25]
-        popupAnchor: [0, -35]
-      });
+        var redeemerIcon = L.icon({
+          iconUrl: 'https://img.icons8.com/?size=100&id=36839&format=png&color=000000',
+          iconSize:, [24, 24],
+          iconAnchor:, [0, 25],
+          popupAnchor: [0, -35]
+        });
 
-      var redeemerIcon = L.icon({
-        iconUrl: 'https://img.icons8.com/?size=100&id=36839&format=png&color=000000',
-        iconSize:, 24
-        iconAnchor:, [0, 25]
-        popupAnchor: [0, -35]
-      });
+        var machuPicchuIcon = L.icon({
+          iconUrl: 'https://img.icons8.com/?size=100&id=36839&format=png&color=000000',
+          iconSize:, [24, 24],
+          iconAnchor:, [0, 25],
+          popupAnchor: [0, -35]
+        });
 
-      var machuPicchuIcon = L.icon({
-        iconUrl: 'https://img.icons8.com/?size=100&id=36839&format=png&color=000000',
-        iconSize:, 24
-        iconAnchor:, [0, 25]
-        popupAnchor: [0, -35]
-      });
+        var chichenItzaIcon = L.icon({
+          iconUrl: 'https://img.icons8.com/?size=100&id=1966&format=png&color=000000',
+          iconSize:, [24, 24],
+          iconAnchor:, [0, 25],
+          popupAnchor: [0, -35]
+        });
 
-      var chichenItzaIcon = L.icon({
-        iconUrl: 'https://img.icons8.com/?size=100&id=1966&format=png&color=000000',
-        iconSize:, 24
-        iconAnchor:, [0, 25]
-        popupAnchor: [0, -35]
-      });
+        var colosseumIcon = L.icon({
+          iconUrl: 'https://img.icons8.com/?size=100&id=4680&format=png&color=000000',
+          iconSize:, [24, 24],
+          iconAnchor:, [0, 25],
+          popupAnchor: [0, -35]
+        });
 
-      var colosseumIcon = L.icon({
-        iconUrl: 'https://img.icons8.com/?size=100&id=4680&format=png&color=000000',
-        iconSize:, 24
-        iconAnchor:, [0, 25]
-        popupAnchor: [0, -35]
-      });
+        var customPopupOptions = {
+          'maxWidth': '300',
+          'className': 'custom-wonder-popup'
+        };
 
-      var customPopupOptions = {
-        'maxWidth': '300',
-        'className': 'custom-wonder-popup'
-      };
+        L.marker([27.174961, 78.042385], {icon: tajMahalIcon})
+          .addTo(mymap)
+          .bindPopup("<b>Taj Mahal</b><br><img src='https://commons.wikimedia.org/wiki/Special:FilePath/Taj_Mahal_(Edited).jpeg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>The Taj Mahal is an ivory-white marble mauseoleum in India. It was commisioned in 1631 by the mughal emperor Shah Jaran to act as a tomb for his late wife Mumtaz Mahal nad evetually his own tomb as well.</p>", customPopupOptions);
 
-      L.marker([27.174961, 78.042385], {icon: tajMahalIcon})
-        .addTo(mymap)
-        .bindPopup("<b>Taj Mahal</b><br><img src='https://commons.wikimedia.org/wiki/File:Taj_Mahal_(Edited).jpeg#/media/File:Taj_Mahal_(Edited).jpeg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>The Taj Mahal is an ivory-white marble mauseoleum in India. It was commisioned in 1631 by the mughal emperor Shah Jaran to act as a tomb for his late wife Mumtaz Mahal nad evetually his own tomb as well.</p>", customPopupOptions);
+        L.marker([40.334245, 116.477652], {icon: greatWallIcon})
+          .addTo(mymap)
+          .bindPopup("<b>Great Wall of China</b><br><img src='https://commons.wikimedia.org/wiki/Special:FilePath/Treasury_petra_crop.jpeg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>The Great Wall of China is a series of ancient fortifications constructed by old Chinese Empires in order to keep out invaders from the north. It spans nearly 13,000 miles in total and stretches across nearly two thirds of China.</p>", customPopupOptions);
 
-      L.marker([40.334245, 116.477652], {icon: greatWallIcon})
-        .addTo(mymap)
-        .bindPopup("<b>Great Wall of China</b><br><img src='https://commons.wikimedia.org/wiki/File:The_Great_Wall_of_China_at_Jinshanling-edit.jpg#/media/File:The_Great_Wall_of_China_at_Jinshanling-edit.jpg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>The Great Wall of China is a series of ancient fortifications constructed by old Chinese Empires in order to keep out invaders from the north. It spans nearly 13,000 miles in total and stretches across nearly two thirds of China.</p>", customPopupOptions);
+        L.marker([30.328611, 35.441944], {icon: petraIcon})
+          .addTo(mymap)
+          .bindPopup("<b>Petra</b><br><img src='https://commons.wikimedia.org/wiki/Special:FilePath/Treasury_petra_crop.jpeg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>Petra is an ancient city in Jordan cut from rose colored sandstone that was built by a nomadic Arabic people known as Nabataenans. It is one of the most important and the most visited destination in Jordan as a whole.</p>", customPopupOptions);
 
-      L.marker([30.328611, 35.441944], {icon: petraIcon})
-        .addTo(mymap)
-        .bindPopup("<b>Petra</b><br><img src='https://commons.wikimedia.org/wiki/File:Treasury_petra_crop.jpeg#/media/File:Treasury_petra_crop.jpeg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>Petra is an ancient city in Jordan cut from rose colored sandstone that was built by a nomadic Arabic people known as Nabataenans. It is one of the most important and the most visited destination in Jordan as a whole.</p>", customPopupOptions);
+        L.marker([-22.951389, -43.2108334], {icon: redeemerIcon})
+          .addTo(mymap)
+          .bindPopup("<b>Christ the Redeemer</b><br><img src='https://commons.wikimedia.org/wiki/Special:FilePath/Christ_the_Redeemer_-_Cristo_Redentor.jpg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>Christ the Redeemer is a Ninety-Eight foot tall art deco statue of Jesus Christ in Brazil. It is the largest such statue in the entire world and is considered both a symbol of Christianity and of Brazil as well.</p>", customPopupOptions);
 
-      L.marker([-22.951389, -43.2108334], {icon: redeemerIcon})
-        .addTo(mymap)
-        .bindPopup("<b>Christ the Redeemer</b><br><img src='https://commons.wikimedia.org/wiki/File:Christ_the_Redeemer_-_Cristo_Redentor.jpg#/media/File:Christ_the_Redeemer_-_Cristo_Redentor.jpg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>Christ the Redeemer is a Ninety-Eight foot tall art deco statue of Jesus Christ in Brazil. It is the largest such statue in the entire world and is considered both a symbol of Christianity and of Brazil as well.</p>", customPopupOptions);
+        L.marker([-13.163056, -72.545556], {icon: machuPicchuIcon})
+          .addTo(mymap)
+          .bindPopup("<b>Machu Picchu</b><br><img src='https://commons.wikimedia.org/wiki/Special:FilePath/Machu_Picchu,_2023_(012).jpg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>Macchu Picchu is an ancient Inca city that is also famously known as, The Lost City of the Incas, and is one of the most iconic symbols of the Incas as well. It is one of the most famous sites in South America and the most visited place in Peru with over 1.5 million tourists a year. </p>", customPopupOptions);
 
-      L.marker([-13.163056, -72.545556], {icon: machuPicchuIcon})
-        .addTo(mymap)
-        .bindPopup("<b>Machu Picchu</b><br><img src='https://commons.wikimedia.org/wiki/File:Machu_Picchu,_2023_(012).jpg#/media/File:Machu_Picchu,_2023_(012).jpg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>Macchu Picchu is an ancient Inca city that is also famously known as, The Lost City of the Incas, and is one of the most iconic symbols of the Incas as well. It is one of the most famous sites in South America and the most visited place in Peru with over 1.5 million tourists a year. </p>", customPopupOptions);
+        L.marker([20.682778, -88.569167], {icon: chichenItzaIcon})
+          .addTo(mymap)
+          .bindPopup("<b>Chichen Itza</b><br><img src='https://commons.wikimedia.org/wiki/Special:FilePath/Chichen_Itza_3.jpg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>Chichen Itza is a large city built by the Maya people and one of the largest native cities in the Americas. It is an example of the cultural diffusion seen in the Americas at this time and is one of the most famous symbold of these cultures.</p>", customPopupOptions);
 
-      L.marker([20.682778, -88.569167], {icon: chichenItzaIcon})
-        .addTo(mymap)
-        .bindPopup("<b>Chichen Itza</b><br><img src='https://commons.wikimedia.org/wiki/File:Chichen_Itza_3.jpg#/media/File:Chichen_Itza_3.jpg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>Chichen Itza is a large city built by the Maya people and one of the largest native cities in the Americas. It is an example of the cultural diffusion seen in the Americas at this time and is one of the most famous symbold of these cultures.</p>", customPopupOptions);
-
-      L.marker([41.890169, 12.492269], {icon: colosseumIcon})
-        .addTo(mymap)
-        .bindPopup("<b>The Colosseum</b><br><img src='https://commons.wikimedia.org/wiki/File:Colosseo_2020.jpg#/media/File:Colosseo_2020.jpg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>The Colosseum is a Roman structure in Italy from the time of the Roman emprie. Many games and races were held there for entertainment fo the Roman people. It is one of the most visited sites in all of Europe for its historical signifigance.</p>", customPopupOptions);
+        L.marker([41.890169, 12.492269], {icon: colosseumIcon})
+          .addTo(mymap)
+          .bindPopup("<b>The Colosseum</b><br><img src='https://commons.wikimedia.org/wiki/Special:FilePath/Colosseo_2020.jpg' style='width:100%; border-radius:5px; margin: 5px 0;'><p>The Colosseum is a Roman structure in Italy from the time of the Roman emprie. Many games and races were held there for entertainment fo the Roman people. It is one of the most visited sites in all of Europe for its historical signifigance.</p>", customPopupOptions);
       </script>
     </div>
   </div>
