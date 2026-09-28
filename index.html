@@ -58,14 +58,16 @@
     <br>
     <div id="mapid" style="width: 600px; height: 400px; margin: auto; bottom: 30px;">
       <script>
-        var mymap = L.map('mapid');
+        var mymap = L.map('mapid').setView([20, 0], 2);
         // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {maxZoom: 18, id: 'mapbox/dark-v10', accessToken: mapbox_access_token}).addTo(mymap);
         L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {}).addTo(mymap);
+
         var geocoder = L.Control.geocoder({
             defaultMarkGeocode: false,
             geocoder: new L.Control.Geocoder.Nominatim()
         }).on('markgeocode', function(e) {
         var bbox = e.geocode.bbox;
+
         var poly = L.polygon([
                 bbox.getSouthEast(),
                 bbox.getNorthEast(),
@@ -77,50 +79,50 @@
 
         var tajMahalIcon = L.icon({
           iconUrl: 'https://img.icons8.com/?size=100&id=4672&format=png&color=000000',
-          iconSize:, [24, 24],
-          iconAnchor:, [0, 25],
+          iconSize: [24, 24],
+          iconAnchor: [0, 25],
           popupAnchor: [0, -35]
         });
 
         var greatWallIcon = L.icon({
           iconUrl: 'https://img.icons8.com/?size=100&id=1992&format=png&color=000000',
-          iconSize:, [24, 24],
-          iconAnchor:, [0, 25],
+          iconSize: [24, 24],
+          iconAnchor: [0, 25],
           popupAnchor: [0, -35]
         });
 
         var petraIcon = L.icon({
           iconUrl: 'https://img.icons8.com/?size=100&id=1992&format=png&color=000000',
-          iconSize:, [24, 24],
-          iconAnchor:, [0, 25],
+          iconSize: [24, 24],
+          iconAnchor: [0, 25],
           popupAnchor: [0, -35]
         });
 
         var redeemerIcon = L.icon({
           iconUrl: 'https://img.icons8.com/?size=100&id=36839&format=png&color=000000',
-          iconSize:, [24, 24],
-          iconAnchor:, [0, 25],
+          iconSize: [24, 24],
+          iconAnchor: [0, 25],
           popupAnchor: [0, -35]
         });
 
         var machuPicchuIcon = L.icon({
           iconUrl: 'https://img.icons8.com/?size=100&id=36839&format=png&color=000000',
-          iconSize:, [24, 24],
-          iconAnchor:, [0, 25],
+          iconSize: [24, 24],
+          iconAnchor: [0, 25],
           popupAnchor: [0, -35]
         });
 
         var chichenItzaIcon = L.icon({
           iconUrl: 'https://img.icons8.com/?size=100&id=1966&format=png&color=000000',
-          iconSize:, [24, 24],
-          iconAnchor:, [0, 25],
+          iconSize: [24, 24],
+          iconAnchor: [0, 25],
           popupAnchor: [0, -35]
         });
 
         var colosseumIcon = L.icon({
           iconUrl: 'https://img.icons8.com/?size=100&id=4680&format=png&color=000000',
-          iconSize:, [24, 24],
-          iconAnchor:, [0, 25],
+          iconSize: [24, 24],
+          iconAnchor: [0, 25],
           popupAnchor: [0, -35]
         });
 
