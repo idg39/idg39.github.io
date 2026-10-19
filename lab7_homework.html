@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>In Progress</title>
+    <title>Lab 7 Homework</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="style.css/popup_styles.css"/>
+    <script>
+      require(["esri/Map", "esri/views/MapView", "esri/layers/TileLayer"], function (Map, MapView, TileLayer) {
+        var TransportationLayer = new TileLayer({
+          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/1950_2017_tornado_touchdown_locations/FeatureServer"
+        });
+
+        var map = new Map({
+          basemap: "navigation",
+          layers: [TransportationLayer]
+        });
+
+        var view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 10,
+          center: [-95.601174, 38.370305]
+        });
+      });
+    </script>
 </head>
 <body>
     <div id="map">
