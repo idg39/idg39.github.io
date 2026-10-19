@@ -11,9 +11,9 @@
 
     <!-- Code to display tornado touchdown locations ArcGIS API -->
     <script>
-      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function (Map, MapView, TileLayer) {
+      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function (Map, MapView, FeatureLayer) {
         var TransportationLayer = new FeatureLayer({
-          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/1950_2017_tornado_touchdown_locations/FeatureServer"
+          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/1950_2017_tornado_touchdown_locations/FeatureServer/0"
         });
 
         var map = new Map({
@@ -44,6 +44,5 @@
           <a href="https://idg39.github.io/query_task.html" target="_blank">Query Task HTML</a>
         </div>
       </div>
-    </div>
 </body>
 </html>
