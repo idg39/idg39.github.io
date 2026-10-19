@@ -3,15 +3,21 @@
 <head>
     <title>Lab 7 Homework</title>
     <meta charset="utf-8" />
+
+    <!-- CSS link for ArcGIS API and for and dropdown menu styling  -->
     <link rel="stylesheet" href="style.css/popup_styles.css"/>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css"/>
+    <script src="https://js.arcgis.com/4.30/"></script>
+
+    <!-- Code to display tornado touchdown locations ArcGIS API -->
     <script>
-      require(["esri/Map", "esri/views/MapView", "esri/layers/TileLayer"], function (Map, MapView, TileLayer) {
-        var TransportationLayer = new TileLayer({
+      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function (Map, MapView, TileLayer) {
+        var TransportationLayer = new FeatureLayer({
           url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/1950_2017_tornado_touchdown_locations/FeatureServer"
         });
 
         var map = new Map({
-          basemap: "navigation",
+          basemap: "streets-navigation-vector",
           layers: [TransportationLayer]
         });
 
@@ -25,7 +31,7 @@
     </script>
 </head>
 <body>
-    <div id="map">
+    <div id="viewDiv"></div>
 
       <div class="dropdown">
         <button class="dropbtn">HTML Files</button>
