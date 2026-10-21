@@ -11,13 +11,20 @@
 
     <!-- Code to display tornado touchdown locations in continental USA using an ArcGIS API -->
     <script>
-      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/geometry/Point", "esri/geometry/geometryEngine"], function (Map, MapView, FeatureLayer, GraphicsLayer, Point, geometryEngine) {
+      require([
+        "esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/geometry/Point", "esri/geometry/geometryEngine"
+      ], function (Map, MapView, FeatureLayer, GraphicsLayer, Point, geometryEngine) {
         var TransportationLayer = new FeatureLayer({
           url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/1950_2017_tornado_touchdown_locations/FeatureServer/0"
+          outFields: ["*"]
+          popupTemplate: {
+            title: "Tornado Touchdown",
+            content: "{*}"
+          };
+
         });
 
         var resultsLayer = new GraphicsLayer();
-          map.add(resultsLayer);
 
         // Code displays the basemap for the information to display on
         var map = new Map({
@@ -35,19 +42,12 @@
       });
 
       // This code adds a copyright to the bottom of the map pane.
-      <div id="copyright">
-        <script>
           var today = new Date()
           var year = today.getFullYear()
+
           document.writeln("Copyright &copy;" + year)
         </script>
-      </div>
-    </script>
     <script>
-    view.when(function(){
-      view.ui.add("optionsDiv", "bottom-right");
-      on(dom.byId("doBtn"), "click", doQuery);
-    });
     var attributeName = dom.byId("attSelect");
     var expressionSign = dom.byId("signSelect");
     var value = dom.byId("valSelect");
@@ -136,7 +136,6 @@
           "Map ready. Choose a town and search radius.";
       }).catch(promiseRejected);
     });
-  });
   </script>
 </head>
 <body>
@@ -173,5 +172,6 @@
   </select>
   <button id="doBtn">Find nearby tornadoes</button>
   <p id="printResults">Choose a town and search radius.</p>
+  <div id="copyright"></div>
 </body>
 </html>
