@@ -47,22 +47,32 @@
     function doQuery() {
       resultsLayer.removeAll();
 
+      // This creates the town select value necessary for the query function
+
       var coords = document.getElementById("townSelect").value.split(",");
       var longitude = Number(coords[0]);
       var latitude = Number(coords[1]);
       var radius = Number(document.getElementById("radiusSelect").value);
+
+      // This creates the variable for the point values of the towns that are used in the query function
 
       var townPoint = new Point({
         longitude: longitude,
         latitude: latitude
       });
 
+      // This creates the search area tool and also makes it so that it utilizes miles and creates a buffer for it as well
+
       var searchArea = geometryEngine.geodesicBuffer(
         townPoint, radius, "miles"
       );
 
+      // This prints the resulting text when the query goes through.
+
       document.getElementById("printResults").textContent =
         "Searching for tornado locations...";
+
+        // This defines the spatial relationship of the query task as when it is input any intersecting points in the tornado dataset are compiled and shown after zooming in to that area
 
       TransportationLayer.queryFeatures({
         geometry: searchArea,
@@ -79,9 +89,13 @@
 
       var radius = document.getElementById("radiusSelect").value;
 
+      // This displays the results of the query in a printed format and is connected to the getElementById function from earlier
+
       document.getElementById("printResults").textContent =
         popResults.length + " tornado touchdown records found within " +
         radius + " miles.";
+
+        // This is the feature that goes to selected features and creates the popup that shows the tornado information
 
       if (popResults.length > 0) {
         view.goTo(popResults).then(function() {
@@ -98,11 +112,15 @@
       } else {
         view.popup.close();
 
+        // This is part of the getElementById and is how the coordinates are inputted for the three town variables.
+
         var coords = document.getElementById("townSelect").value.split(",");
         var townPoint = new Point({
           longitude: Number(coords[0]),
           latitude: Number(coords[1])
         });
+
+        // This function is the zoom to feature so that when a query function is input then it will zoom to it
 
         view.goTo({
           target: townPoint,
@@ -110,6 +128,8 @@
         });
       }
     }
+
+    // This function creates a error message so that if a query were to fail for some reason then it will display a message
 
     function promiseRejected(error) {
       console.error("Query failed:", error);
@@ -119,6 +139,8 @@
     }
     view.when(function() {
       document.getElementById("doBtn").addEventListener("click", doQuery);
+
+      // This is part of the ui interface where a user will know that the query function is ready to be utilized and where the fucntion is generlaly located.
 
       TransportationLayer.load().then(function() {
         document.getElementById("printResults").textContent =
@@ -136,6 +158,9 @@
   </div>
     <div id="viewDiv"></div>
 
+      <!-- This is the dropdown menu that is where the html files are stored, the target="_blank"
+      allows it to open onto another tab and not the one the link was clicked on, seperate css styling can be found in popup_styles.css
+     -->
       <div class="dropdown">
         <button class="dropbtn">HTML Files</button>
         <div class="dropdown-content">
@@ -147,6 +172,9 @@
           <a href="https://idg39.github.io/query_task.html" target="_blank">Query Task HTML</a>
         </div>
       </div>
+
+      <!-- These are the labels utilized for the query function on the map -->
+
   <label for="townSelect">Choose a town:</label>
   <select id="townSelect">
     <option value="-97.3259,37.7059">Wichita, Kansas</option>
