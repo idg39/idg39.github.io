@@ -31,6 +31,15 @@
     </script>
 </head>
 <body>
+  <div id="body-container">
+    <div id="header">
+      <h1>Map of Tornado Dropdown Locations from 1950-2017</h1>
+      <script src="javascript/external.js"></script>
+      <script>
+        document.write(welcome());
+      </script>
+    </div>
+  </div>
     <div id="viewDiv"></div>
 
       <div class="dropdown">
@@ -43,6 +52,16 @@
           <a href="https://idg39.github.io/basemap_gallery.html" target="_blank">Basemap Gallery HTML</a>
           <a href="https://idg39.github.io/query_task.html" target="_blank">Query Task HTML</a>
         </div>
+      </div>
+      <div id="copyright">
+        <script>
+          //This will create a new date element that will get the current date and time whenever the site is launched
+          var today = new Date()
+          //This will get the current year that the date element provides
+          var year = today.getFullYear()
+          //This will put in the copyright symbol and add the year as well to the text at the bottom of the page
+          document.writeln("Copyright &copy;" + year)
+        </script>
       </div>
 </body>
 </html>
