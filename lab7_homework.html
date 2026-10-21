@@ -14,14 +14,14 @@
       require([
         "esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/geometry/Point", "esri/geometry/geometryEngine"
       ], function (Map, MapView, FeatureLayer, GraphicsLayer, Point, geometryEngine) {
+
         var TransportationLayer = new FeatureLayer({
-          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/1950_2017_tornado_touchdown_locations/FeatureServer/0"
-          outFields: ["*"]
+          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/1950_2017_tornado_touchdown_locations/FeatureServer/0",
+          outFields: ["*"],
           popupTemplate: {
             title: "Tornado Touchdown",
             content: "{*}"
-          };
-
+          }
         });
 
         var resultsLayer = new GraphicsLayer();
@@ -39,18 +39,11 @@
           zoom: 4,
           center: [-95.601174, 38.370305]
         });
-      });
 
       // This code adds a copyright to the bottom of the map pane.
-          var today = new Date()
-          var year = today.getFullYear()
+      document.getElementById("copyright").textContent =
+        "Copyright © " + new Date().getFullYear();
 
-          document.writeln("Copyright &copy;" + year)
-        </script>
-    <script>
-    var attributeName = dom.byId("attSelect");
-    var expressionSign = dom.byId("signSelect");
-    var value = dom.byId("valSelect");
     function doQuery() {
       resultsLayer.removeAll();
 
@@ -81,10 +74,6 @@
 
     function getResults(response) {
       var popResults = response.features;
-
-      popResults.forEach(function(feature) {
-        feature.popupTemplate = popupTemplate;
-      });
 
       resultsLayer.addMany(popResults);
 
@@ -136,6 +125,7 @@
           "Map ready. Choose a town and search radius.";
       }).catch(promiseRejected);
     });
+  });
   </script>
 </head>
 <body>
