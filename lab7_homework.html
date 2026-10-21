@@ -11,16 +11,18 @@
 
     <!-- Code to display tornado touchdown locations in continental USA using an ArcGIS API -->
     <script>
-      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function (Map, MapView, FeatureLayer) {
+      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/geometry/Point", "esri/geometry/geometryEngine"], function (Map, MapView, FeatureLayer, Point, geometryEngine) {
         var TransportationLayer = new FeatureLayer({
           url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/1950_2017_tornado_touchdown_locations/FeatureServer/0"
         });
 
+        // Code displays the basemap for the information to display on
         var map = new Map({
           basemap: "streets-navigation-vector",
           layers: [TransportationLayer]
         });
 
+        // This centers the map on a certain location and zooms it to correctly display all of the data
         var view = new MapView({
           container: "viewDiv",
           map: map,
@@ -28,7 +30,91 @@
           center: [-95.601174, 38.370305]
         });
       });
+
+      // This code adds a copyright to the bottom of the map pane.
+      <div id="copyright">
+        <script>
+          var today = new Date()
+          var year = today.getFullYear()
+          document.writeln("Copyright &copy;" + year)
+        </script>
+      </div>
     </script>
+    <script>
+    view.when(function(){
+      view.ui.add("optionsDiv", "bottom-right");
+      on(dom.byId("doBtn"), "click", doQuery);
+    });
+    var attributeName = dom.byId("attSelect");
+    var expressionSign = dom.byId("signSelect");
+    var value = dom.byId("valSelect");
+    function doQuery(){
+      resultsLayer.removeAll();
+      params.where = attributeName.value + expressionSign.value + value.value;
+      qTask.execute(params).then(getResults).catch(promiseRejected);
+    }
+    function getResults(response){
+      var popResults = arrayUtils.map(
+        response.features,
+        function(feature){
+          feature.popupTemplate = popupTemplate;
+          return feature;
+        }
+      );
+      resultsLayer.addMany(popResults);
+      view.goTo(popResults).then(function(){
+        view.popup.open({
+          features: popResults,
+          featureMenuOpen: true,
+          updateLocationEnabled: true
+        });
+      });
+      dom.byId("printResults").innerHTML = popResults.length + " results found!";
+    };
+    function promiseRejected(error){
+      console.error("Promise rejected: ", error.message," Parameter values: ", attributeName.value,
+    expressionSign.value, value.value);
+      }
+      var popUrl = "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/1950_2017_tornado_touchdown_locations/FeatureServer/0";
+      var popupTemplate = {
+        title: "Tornado touchdown - {yr}",
+        fieldInfos:[
+          {
+            fieldName: "Locations",
+            label: "Locations",
+            format: {
+              places: 0,
+              digitSeparator: true
+            }
+          },
+          {
+            fieldName: "Household",
+            label: "Household",
+            format: {
+              places: 0,
+              digitSeparator: true
+            }
+          }
+        ],
+        content: "<b>State:</b> {st}" + "<br><b>year:</b> {yr}" + "<br><b>Starting latitude:</b>
+      {slat}" + "<br><b>Starting longitude:</b> {slon}"
+      };
+      var resultsLayer = new GraphicsLayer();
+      var qTask = new QueryTask({ url: popUrl });
+      var params = new Query({ returnGeometry: true, outFields: ["*"] });
+
+      // This code moves the map to the results when the query function is pushed through
+      if (features.length > 0) {
+        view.goTo(features).then(function() {
+          view.popup.open({
+            features: features,
+            featureMenuOpen: true,
+            updateLocationEnabled: true
+          });
+        });
+      }
+    });
+  </script>
 </head>
 <body>
   <div id="body-container">
@@ -49,12 +135,20 @@
           <a href="https://idg39.github.io/query_task.html" target="_blank">Query Task HTML</a>
         </div>
       </div>
-      <div id="copyright">
-        <script>
-          var today = new Date()
-          var year = today.getFullYear()
-          document.writeln("Copyright &copy;" + year)
-        </script>
-      </div>
+  <label for="townSelect">Choose a town:</label>
+  <select id="townSelect">
+    <option value="-97.3259,37.7059">Wichita, Kansas</option>
+    <option value="-96.8049,46.8677">Fargo, North Dakota</option>
+    <option value="-97.5164,35.4676">Oklahoma City, Oklahoma</option>
+  </select>
+  <label for="radiusSelect">Search radius:</label>
+  <select id="radiusSelect">
+    <option value="10">10 miles</option>
+    <option value="25" selected>25 miles</option>
+    <option value="50">50 miles</option>
+    <option value="100">100 miles</option>
+  </select>
+  <button id="doBtn">Find nearby tornadoes</button>
+  <p id="printResults">Choose a town and search radius.</p>
 </body>
 </html>
