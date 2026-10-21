@@ -11,15 +11,18 @@
 
     <!-- Code to display tornado touchdown locations in continental USA using an ArcGIS API -->
     <script>
-      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/geometry/Point", "esri/geometry/geometryEngine"], function (Map, MapView, FeatureLayer, Point, geometryEngine) {
+      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/geometry/Point", "esri/geometry/geometryEngine"], function (Map, MapView, FeatureLayer, GraphicsLayer, Point, geometryEngine) {
         var TransportationLayer = new FeatureLayer({
           url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/1950_2017_tornado_touchdown_locations/FeatureServer/0"
         });
 
+        var resultsLayer = new GraphicsLayer();
+          map.add(resultsLayer);
+
         // Code displays the basemap for the information to display on
         var map = new Map({
           basemap: "streets-navigation-vector",
-          layers: [TransportationLayer]
+          layers: [TransportationLayer, resultsLayer]
         });
 
         // This centers the map on a certain location and zooms it to correctly display all of the data
@@ -48,72 +51,92 @@
     var attributeName = dom.byId("attSelect");
     var expressionSign = dom.byId("signSelect");
     var value = dom.byId("valSelect");
-    function doQuery(){
+    function doQuery() {
       resultsLayer.removeAll();
-      params.where = attributeName.value + expressionSign.value + value.value;
-      qTask.execute(params).then(getResults).catch(promiseRejected);
-    }
-    function getResults(response){
-      var popResults = arrayUtils.map(
-        response.features,
-        function(feature){
-          feature.popupTemplate = popupTemplate;
-          return feature;
-        }
-      );
-      resultsLayer.addMany(popResults);
-      view.goTo(popResults).then(function(){
-        view.popup.open({
-          features: popResults,
-          featureMenuOpen: true,
-          updateLocationEnabled: true
-        });
-      });
-      dom.byId("printResults").innerHTML = popResults.length + " results found!";
-    };
-    function promiseRejected(error){
-      console.error("Promise rejected: ", error.message," Parameter values: ", attributeName.value,
-    expressionSign.value, value.value);
-      }
-      var popUrl = "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/1950_2017_tornado_touchdown_locations/FeatureServer/0";
-      var popupTemplate = {
-        title: "Tornado touchdown - {yr}",
-        fieldInfos:[
-          {
-            fieldName: "Locations",
-            label: "Locations",
-            format: {
-              places: 0,
-              digitSeparator: true
-            }
-          },
-          {
-            fieldName: "Household",
-            label: "Household",
-            format: {
-              places: 0,
-              digitSeparator: true
-            }
-          }
-        ],
-        content: "<b>State:</b> {st}" + "<br><b>year:</b> {yr}" + "<br><b>Starting latitude:</b>
-      {slat}" + "<br><b>Starting longitude:</b> {slon}"
-      };
-      var resultsLayer = new GraphicsLayer();
-      var qTask = new QueryTask({ url: popUrl });
-      var params = new Query({ returnGeometry: true, outFields: ["*"] });
 
-      // This code moves the map to the results when the query function is pushed through
-      if (features.length > 0) {
-        view.goTo(features).then(function() {
+      var coords = document.getElementById("townSelect").value.split(",");
+      var longitude = Number(coords[0]);
+      var latitude = Number(coords[1]);
+      var radius = Number(document.getElementById("radiusSelect").value);
+
+      var townPoint = new Point({
+        longitude: longitude,
+        latitude: latitude
+      });
+
+      var searchArea = geometryEngine.geodesicBuffer(
+        townPoint, radius, "miles"
+      );
+
+      document.getElementById("printResults").textContent =
+        "Searching for tornado locations...";
+
+      TransportationLayer.queryFeatures({
+        geometry: searchArea,
+        spatialRelationship: "intersects",
+        returnGeometry: true,
+        outFields: ["*"]
+      }).then(getResults).catch(promiseRejected);
+    }
+
+    function getResults(response) {
+      var popResults = response.features;
+
+      popResults.forEach(function(feature) {
+        feature.popupTemplate = popupTemplate;
+      });
+
+      resultsLayer.addMany(popResults);
+
+      var radius = document.getElementById("radiusSelect").value;
+
+      document.getElementById("printResults").textContent =
+        popResults.length + " tornado touchdown records found within " +
+        radius + " miles.";
+
+      if (popResults.length > 0) {
+        view.goTo(popResults).then(function() {
           view.popup.open({
-            features: features,
+            features: popResults,
             featureMenuOpen: true,
             updateLocationEnabled: true
           });
+        }).catch(function(error) {
+          if (error.name !== "AbortError") {
+            console.error("Map navigation error:", error);
+          }
+        });
+      } else {
+        view.popup.close();
+
+        var coords = document.getElementById("townSelect").value.split(",");
+        var townPoint = new Point({
+          longitude: Number(coords[0]),
+          latitude: Number(coords[1])
+        });
+
+        view.goTo({
+          target: townPoint,
+          zoom: 9
         });
       }
+    }
+
+    function promiseRejected(error) {
+      console.error("Query failed:", error);
+
+      document.getElementById("printResults").textContent =
+        "Unable to retrieve tornado locations.";
+    }
+    view.when(function() {
+      document.getElementById("doBtn").addEventListener("click", doQuery);
+
+      TransportationLayer.load().then(function() {
+        document.getElementById("printResults").textContent =
+          "Map ready. Choose a town and search radius.";
+      }).catch(promiseRejected);
     });
+  });
   </script>
 </head>
 <body>
